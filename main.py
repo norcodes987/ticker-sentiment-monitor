@@ -1,8 +1,6 @@
 import feedparser
-import requests
-from datetime import datetime, timedelta
+from datetime import datetime
 import time
-import re
 from typing import List, Dict, Tuple, Set
 import json
 import os
