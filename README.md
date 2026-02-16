@@ -1,234 +1,189 @@
-# Market Sentiment Monitor
+# 📊 Market Sentiment Monitor
 
-A Python application that scrapes financial RSS feeds, analyzes market sentiment, and sends alerts via Telegram.
+An AI-powered bot that analyzes financial news sentiment for your stock portfolio and sends daily email reports at market close.
 
-## Features
+## 🎯 Features
 
-- 📰 Monitors major financial news sources (Yahoo Finance, CNBC, MarketWatch, Investing.com, Seeking Alpha)
-- 📊 Sentiment analysis using keyword matching
-- 🚨 Telegram alerts for strong bullish/bearish signals
-- 📈 Summary reports of overall market sentiment
-- 💾 Tracks seen articles to avoid duplicates
-- ⏰ Runs continuously with configurable intervals
+- **📈 Ticker-Specific Tracking** - Monitor sentiment for YOUR stocks (AAPL, MSFT, NVDA, etc.)
+- **🤖 AI-Powered Analysis** - Uses FinBERT (specialized for financial news)
+- **📧 Daily Email Reports** - Beautiful HTML emails sent at 4 PM ET (market close)
+- **🎨 Smart Filtering** - Avoids false positives (e.g., "OpenAI" vs "Opendoor")
+- **🌐 Multi-Source** - Aggregates from Yahoo Finance, CNBC, MarketWatch, and more
+- **⏰ Automated Scheduling** - Runs daily without manual intervention
 
-## Setup Instructions
+---
 
-### 1. Install Dependencies
+## 📸 Example Report
+
+You'll receive emails like this every day:
+
+```
+📊 Daily Market & Ticker Sentiment Report
+Wednesday, February 14, 2024 - 04:00 PM ET
+
+Watching: AAPL • MSFT • NVDA • TSLA
+
+🌐 Overall Market Sentiment
+🟢 BULLISH
+Based on 48 articles | Avg Score: 0.45
+
+📌 AAPL
+Sentiment: 🟢 BULLISH (Score: 0.67)
+Articles Mentioning: 12
+Recent Headlines:
+• Apple beats Q4 earnings expectations (VERY BULLISH +0.82)
+• iPhone sales surge in China (Bullish +0.54)
+...
+
+📌 NVDA
+Sentiment: 🟢 VERY BULLISH (Score: 0.81)
+Articles Mentioning: 15
+Recent Headlines:
+• Nvidia announces new AI chip breakthrough (VERY BULLISH +0.91)
+...
+```
+
+---
+
+## 🚀 Quick Start
+
+### Installation
 
 ```bash
-pip install -r requirements.txt
+# 1. Clone the repository
+
+# 2. Install dependencies
+pip install -r requirements_email.txt
+
+# 3. Create .env file
+cp .env.example .env
+
+# 4. Edit .env with your credentials (see below)
+nano .env  # or use any text editor
 ```
 
-### 2. Create a Telegram Bot
+---
 
-1. Open Telegram and search for `@BotFather`
-2. Send `/newbot` command
-3. Follow the instructions to create your bot
-4. Save the **bot token** you receive (looks like: `123456789:ABCdefGHIjklMNOpqrsTUVwxyz`)
+## 🔑 Gmail Setup
 
-### 3. Get Your Chat ID
+You need a **Gmail App Password** (not your regular password):
 
-**Method 1: Using @userinfobot**
+1. **Enable 2-Factor Authentication:**
+   - Go to: https://myaccount.google.com/security
+   - Enable "2-Step Verification"
 
-1. Search for `@userinfobot` in Telegram
-2. Start a chat with it
-3. Your chat ID will be displayed
+2. **Create App Password:**
+   - Go to: https://myaccount.google.com/apppasswords
+   - App: **Mail**
+   - Device: **Other** → "Market Sentiment Bot"
+   - Click **Generate**
+   - Copy the 16-character password
 
-**Method 2: Using the API**
+3. **Update .env file:**
+   ```dotenv
+   GMAIL_USER=your.email@gmail.com
+   GMAIL_APP_PASSWORD=abcd efgh ijkl mnop
+   WATCH_TICKERS=AAPL,MSFT,NVDA,TSLA
+   ```
 
-1. Send a message to your bot
-2. Visit: `https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates`
-3. Look for `"chat":{"id":` in the response
+---
 
-### 4. Set Environment Variables
+## ⚙️ Configuration
 
-**Linux/Mac:**
+### Supported Tickers
+
+The bot includes mappings for:
+
+- Major tech stocks (AAPL, MSFT, NVDA, GOOGL, META, etc.)
+- ETFs (BOTZ, SPY, QQQ, etc.)
+- Crypto-related (MSTR, COIN, IBIT, etc.)
+- International stocks (3067.HK, etc.)
+
+**Don't see your ticker?** Add it to `ticker_mappings.json`:
+
+```json
+{
+  "YOUR_TICKER": {
+    "name": "Company Name",
+    "aliases": ["Company Name", "YOUR_TICKER", "Alternative Name"]
+  }
+}
+```
+
+---
+
+## 🏃 Usage
+
+### Run Once (Test)
 
 ```bash
-export TELEGRAM_BOT_TOKEN='your_bot_token_here'
-export TELEGRAM_CHAT_ID='your_chat_id_here'
+python market_sentiment_json.py
 ```
 
-**Windows (Command Prompt):**
+You should receive an email within 2-3 minutes!
 
-```cmd
-set TELEGRAM_BOT_TOKEN=your_bot_token_here
-set TELEGRAM_CHAT_ID=your_chat_id_here
-```
-
-**Windows (PowerShell):**
-
-```powershell
-$env:TELEGRAM_BOT_TOKEN='your_bot_token_here'
-$env:TELEGRAM_CHAT_ID='your_chat_id_here'
-```
-
-### 5. Run the Application
+### Run Daily at Market Close
 
 ```bash
-python market_sentiment_monitor.py
+python run_at_market_close.py
 ```
 
-## How It Works
+This runs at **4:00 PM Eastern Time** every day, regardless of your timezone.
 
-### Sentiment Analysis
+## 🤖 How It Works
 
-The app analyzes headlines and summaries using keyword matching:
+1. **Fetches News** - Scans RSS feeds from Yahoo Finance, CNBC, MarketWatch, Seeking Alpha, Investing.com
+2. **Extracts Tickers** - Identifies which articles mention your stocks
+3. **Analyzes Sentiment** - Uses FinBERT AI to score sentiment (-1 to +1)
+4. **Smart Filtering** - Avoids false positives using context validation
+5. **Generates Report** - Creates beautiful HTML email with:
+   - Overall market sentiment
+   - Individual ticker sentiment scores
+   - Top bullish/bearish headlines
+   - Article links for further reading
+6. **Sends Email** - Delivers to your inbox at 4 PM ET
 
-**Bullish Keywords:** rally, surge, gain, rise, bull, optimism, growth, etc.
+---
 
-**Bearish Keywords:** fall, drop, decline, bear, crash, plunge, recession, etc.
+## 📊 Sentiment Scoring
 
-**Sentiment Levels:**
+| Score Range  | Label           | Meaning                    |
+| ------------ | --------------- | -------------------------- |
+| > 0.5        | 🟢 VERY BULLISH | Strong positive sentiment  |
+| 0.1 to 0.5   | 🟢 Bullish      | Positive sentiment         |
+| -0.1 to 0.1  | ⚪ Neutral      | Mixed or neutral sentiment |
+| -0.5 to -0.1 | 🔴 Bearish      | Negative sentiment         |
+| < -0.5       | 🔴 VERY BEARISH | Strong negative sentiment  |
 
-- 🟢 VERY BULLISH: Score > 2
-- 🟢 Bullish: Score > 0
-- ⚪ Neutral: Score = 0
-- 🔴 Bearish: Score < 0
-- 🔴 VERY BEARISH: Score < -2
+---
 
-### Alert Types
+## 🛡️ Smart Filtering
 
-1. **Summary Report** - Sent every scan cycle with overall market sentiment
-2. **Individual Alerts** - Sent for articles with strong sentiment (|score| >= 2)
+The bot uses context validation to avoid false positives:
 
-### Data Sources
+### Example: OPEN (Opendoor Technologies)
 
-- Yahoo Finance
-- CNBC Top News
-- Investing.com
-- MarketWatch
-- Seeking Alpha
+❌ **Rejects:**
 
-## Customization
+- "OpenAI releases new model"
+- "The market is open today"
+- "Open source software"
 
-### Change Scan Interval
+✅ **Accepts:**
 
-Edit the `interval_minutes` parameter in `main()`:
+- "Opendoor Technologies beats earnings"
+- "Real estate platform Opendoor..."
 
-```python
-monitor.run_continuous(interval_minutes=15)  # Scan every 15 minutes
-```
+### Example: MSTR (MicroStrategy)
 
-### Add More RSS Feeds
+❌ **Rejects:**
 
-Add URLs to the `self.rss_feeds` list:
+- "Brian Armstrong discusses crypto"
+- "Neil Armstrong's legacy"
 
-```python
-self.rss_feeds = [
-    "https://your-feed-url.com/rss",
-    # ... more feeds
-]
-```
+✅ **Accepts:**
 
-### Adjust Sentiment Keywords
+- "MicroStrategy buys more Bitcoin"
+- "Michael Saylor's MicroStrategy..."
 
-Modify the `positive_keywords` and `negative_keywords` lists in `__init__`:
-
-```python
-self.positive_keywords = ['rally', 'surge', 'your_keyword']
-self.negative_keywords = ['crash', 'decline', 'your_keyword']
-```
-
-### Change Alert Threshold
-
-Modify the condition in `send_article_alert()`:
-
-```python
-if abs(score) < 3:  # Only alert for very strong signals
-    return
-```
-
-## Running as a Background Service
-
-### Using systemd (Linux)
-
-1. Create a service file `/etc/systemd/system/market-monitor.service`:
-
-```ini
-[Unit]
-Description=Market Sentiment Monitor
-After=network.target
-
-[Service]
-Type=simple
-User=your_username
-WorkingDirectory=/path/to/your/app
-Environment="TELEGRAM_BOT_TOKEN=your_token"
-Environment="TELEGRAM_CHAT_ID=your_chat_id"
-ExecStart=/usr/bin/python3 market_sentiment_monitor.py
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
-```
-
-2. Enable and start the service:
-
-```bash
-sudo systemctl enable market-monitor
-sudo systemctl start market-monitor
-sudo systemctl status market-monitor
-```
-
-### Using screen (Linux/Mac)
-
-```bash
-screen -S market-monitor
-python market_sentiment_monitor.py
-# Press Ctrl+A, then D to detach
-# Re-attach with: screen -r market-monitor
-```
-
-### Using nohup
-
-```bash
-nohup python market_sentiment_monitor.py > monitor.log 2>&1 &
-```
-
-## Troubleshooting
-
-### No messages received
-
-- Verify your bot token and chat ID are correct
-- Make sure you've started a conversation with your bot
-- Check if the bot has permission to send messages
-
-### RSS feed errors
-
-- Some feeds may be temporarily unavailable
-- Check your internet connection
-- The app will skip failed feeds and continue with others
-
-### Too many/few alerts
-
-- Adjust the sentiment threshold in `send_article_alert()`
-- Modify the scan interval
-- Customize keyword lists
-
-## Example Output
-
-```
-📊 Market Sentiment Report
-Time: 2024-02-14 09:30
-Overall Sentiment: 🟢 BULLISH
-Articles Analyzed: 15
-Avg Score: 1.47
-
-🚨 Market Alert
-
-Sentiment: 🟢 VERY BULLISH (Score: 3)
-
-S&P 500 Surges to Record High on Strong Earnings Beat
-
-Source: Yahoo Finance
-Link: https://...
-```
-
-## License
-
-MIT License - Feel free to modify and use as needed!
-
-## Disclaimer
-
-This tool provides sentiment analysis based on keyword matching and should not be used as the sole basis for investment decisions. Always do your own research and consult with financial professionals.
+---
