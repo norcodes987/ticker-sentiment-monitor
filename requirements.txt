@@ -1,0 +1,4 @@
+feedparser==6.0.10
+requests==2.31.0
+vaderSentiment==3.3.2
+transformers>=4.30.0 

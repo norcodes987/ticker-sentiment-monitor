@@ -1,0 +1,94 @@
+{
+  "MSFT": {
+    "name": "Microsoft",
+    "aliases": ["Microsoft", "MSFT", "MSFT Corp", "Microsoft Corp"]
+  },
+  "MSTR": {
+    "name": "MicroStrategy",
+    "aliases": ["MicroStrategy", "MSTR", "Micro Strategy", "MicroStrategy Inc"]
+  },
+  "TEVA": {
+    "name": "Teva Pharmaceutical",
+    "aliases": [
+      "Teva",
+      "TEVA",
+      "Teva Pharmaceutical",
+      "Teva Pharma",
+      "Teva Pharmaceuticals"
+    ]
+  },
+  "OPEN": {
+    "name": "Opendoor Technologies",
+    "aliases": ["Opendoor", "OPEN", "Opendoor Technologies"]
+  },
+  "FIG": {
+    "name": "Figma",
+    "aliases": ["FIG", "Figma"]
+  },
+  "BOTZ": {
+    "name": "Global X Robotics & AI ETF",
+    "aliases": [
+      "BOTZ",
+      "Global X Robotics",
+      "Global X AI",
+      "Robotics ETF",
+      "Global X Robotics & AI"
+    ]
+  },
+  "IBIT": {
+    "name": "iShares Bitcoin Trust",
+    "aliases": [
+      "IBIT",
+      "iShares Bitcoin",
+      "iShares Bitcoin Trust",
+      "BlackRock Bitcoin",
+      "BlackRock Bitcoin ETF"
+    ]
+  },
+  "NVDA": {
+    "name": "Nvidia",
+    "aliases": ["Nvidia", "NVDA", "Nvidia Corp"]
+  },
+  "RGTI": {
+    "name": "Rigetti Computing",
+    "aliases": ["RGTI", "Rigetti", "Rigetti Computing", "Rigetti Computing Inc"]
+  },
+  "SPYM": {
+    "name": "SPDR Portfolio S&P 500 Value ETF",
+    "aliases": ["SPYM", "SPDR S&P 500", "SPDR Portfolio", "S&P 500 Value ETF"]
+  },
+  "COUR": {
+    "name": "Coursera",
+    "aliases": ["Coursera", "COUR", "Coursera Inc"]
+  },
+  "AAPL": {
+    "name": "Apple",
+    "aliases": ["Apple", "AAPL", "Apple Inc"]
+  },
+  "3067.HK": {
+    "name": "iShares Hang Seng Tech ETF",
+    "aliases": [
+      "3067.HK",
+      "03067",
+      "iShares Hang Seng Tech",
+      "Hang Seng Tech ETF",
+      "HSTECH"
+    ]
+  },
+  "TSLA": {
+    "name": "Tesla",
+    "aliases": ["Tesla", "TSLA", "Tesla Inc"]
+  },
+  "GOOGL": {
+    "name": "Alphabet",
+    "aliases": ["Google", "Alphabet", "GOOGL", "GOOG", "Alphabet Inc"]
+  },
+  "AMZN": {
+    "name": "Amazon",
+    "aliases": ["Amazon", "AMZN", "Amazon.com"]
+  },
+  "META": {
+    "name": "Meta Platforms",
+    "aliases": ["Meta", "Facebook", "META", "Meta Platforms"]
+  }
+}
