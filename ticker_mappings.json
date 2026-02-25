@@ -90,5 +90,22 @@
   "META": {
     "name": "Meta Platforms",
     "aliases": ["Meta", "Facebook", "META", "Meta Platforms"]
+  },
+  "CIFR": {
+    "name": "Cipher Mining",
+    "aliases": ["CIFR", "Cipher Mining", "Cipher Mining Inc"]
+  },
+  "NBIS": {
+    "name": "Nebius Group",
+    "aliases": ["NBIS", "Nebius", "Nebius Group"]
+  },
+  "SMH": {
+    "name": "VanEck Semiconductor ETF",
+    "aliases": [
+      "SMH",
+      "VanEck Semiconductor",
+      "VanEck Semiconductor ETF",
+      "Semiconductor ETF"
+    ]
   }
 }
